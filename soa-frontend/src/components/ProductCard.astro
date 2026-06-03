@@ -1,0 +1,48 @@
+---
+// src/components/ProductCard.astro
+// Este componente es un template estatico; la logica se inyecta desde el dashboard.
+---
+
+<template id="product-card-tpl">
+  <article
+    class="group relative flex flex-col rounded-lg border border-slate-800
+           bg-slate-900 p-5 shadow-lg
+           hover:border-brand-500/50 hover:shadow-brand-500/10
+           transition-all duration-300"
+    data-id=""
+  >
+    <span
+      class="badge absolute top-4 right-4 rounded-full px-2.5 py-0.5
+             text-xs font-semibold font-mono"
+    ></span>
+
+    <div class="flex-1 space-y-1 mb-5">
+      <p class="text-xs font-mono text-slate-500 tracking-widest">SKU #<span class="id-text"></span></p>
+      <h3 class="text-base font-semibold text-slate-100 leading-snug desc-text"></h3>
+      <p class="text-2xl font-bold text-brand-400 font-mono precio-text"></p>
+    </div>
+
+    <div class="flex items-center gap-3 mt-auto">
+      <input
+        type="number"
+        min="1"
+        max="99"
+        value="1"
+        class="cantidad-input w-20 rounded-lg border border-slate-700 bg-slate-800
+               px-3 py-2 text-sm text-center text-slate-100 font-mono
+               focus:outline-none focus:ring-2 focus:ring-brand-500"
+        aria-label="Cantidad"
+      />
+      <button
+        class="comprar-btn flex-1 rounded-lg bg-brand-600 hover:bg-brand-500
+               px-4 py-2 text-sm font-semibold text-white
+               transition-all duration-200 active:scale-[0.97]
+               disabled:opacity-40 disabled:cursor-not-allowed"
+      >
+        Comprar
+      </button>
+    </div>
+
+    <div class="toast-msg hidden mt-3 rounded-lg px-3 py-2 text-xs font-mono text-center"></div>
+  </article>
+</template>

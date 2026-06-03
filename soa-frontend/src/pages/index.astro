@@ -1,0 +1,270 @@
+---
+// src/pages/index.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Acceso">
+  <style>
+    @keyframes float-in {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse-ring {
+      0%   { transform: scale(1);   opacity: 0.4; }
+      50%  { transform: scale(1.15); opacity: 0.1; }
+      100% { transform: scale(1);   opacity: 0.4; }
+    }
+    .card-enter  { animation: float-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    .card-enter-2 { animation: float-in 0.6s 0.1s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    .card-enter-3 { animation: float-in 0.6s 0.2s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    .pulse-ring   { animation: pulse-ring 3s ease-in-out infinite; }
+
+    .input-field {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: #f4f4f5;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+    .input-field::placeholder { color: rgba(255,255,255,0.25); }
+    .input-field:focus {
+      border-color: #f97316;
+      background: rgba(249, 115, 22, 0.06);
+      box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.12);
+    }
+    .input-field.error {
+      border-color: #f87171;
+      background: rgba(248, 113, 113, 0.06);
+    }
+
+    .btn-primary {
+      width: 100%;
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      border: none;
+      border-radius: 10px;
+      padding: 13px 24px;
+      color: white;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 25px rgba(249, 115, 22, 0.35);
+    }
+    .btn-primary:active:not(:disabled) { transform: translateY(0); }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .grid-bg {
+      background-image:
+        linear-gradient(rgba(249,115,22,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(249,115,22,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spin { animation: spin 0.8s linear infinite; }
+  </style>
+
+  <main class="min-h-screen grid-bg flex items-center justify-center px-4 relative overflow-hidden">
+
+    <!-- Glow orb fondo -->
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+      <div class="pulse-ring w-96 h-96 rounded-full"
+           style="background: radial-gradient(circle, rgba(249,115,22,0.15) 0%, transparent 70%);"></div>
+    </div>
+
+    <div class="w-full max-w-[400px] relative z-10">
+
+      <!-- Header marca -->
+      <div class="text-center mb-10 card-enter">
+        <div class="inline-flex items-center gap-2 mb-5">
+          <div class="w-9 h-9 rounded-xl flex items-center justify-center"
+               style="background: linear-gradient(135deg, #f97316, #ea580c);">
+            <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M13.5 21v-7.5a.75.75 0 01.75-.75h3a.75.75 0 01.75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349m-16.5 11.65V9.35m0 0a3.001 3.001 0 003.75-.615A2.993 2.993 0 009.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 002.25 1.016c.896 0 1.7-.393 2.25-1.016a3.001 3.001 0 003.75.614m-16.5 0a3.004 3.004 0 01-.621-4.72L4.318 3.44A1.5 1.5 0 015.378 3h13.243a1.5 1.5 0 011.06.44l1.19 2.189a3 3 0 01-.621 4.72m-13.5 8.65h3.75a.75.75 0 00.75-.75V13.5a.75.75 0 00-.75-.75H6.75a.75.75 0 00-.75.75v3.75c0 .415.336.75.75.75z"/>
+            </svg>
+          </div>
+          <span class="font-display text-xl font-bold text-white tracking-tight"
+                style="font-family: 'Syne', sans-serif;">ShopNow</span>
+        </div>
+        <h1 class="text-2xl font-bold text-white mb-1"
+            style="font-family: 'Syne', sans-serif;">Bienvenido de vuelta</h1>
+        <p class="text-sm text-zinc-500" style="font-family: 'DM Sans', sans-serif;">
+          Ingresa tus credenciales para acceder al sistema
+        </p>
+      </div>
+
+      <!-- Card login -->
+      <div class="card-enter-2 rounded-2xl p-8"
+           style="background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.08); backdrop-filter: blur(20px);">
+
+        <!-- Alerta de error -->
+        <div id="error-banner"
+             class="hidden mb-5 rounded-xl px-4 py-3 flex items-start gap-3"
+             style="background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.25);">
+          <svg class="w-4 h-4 mt-0.5 shrink-0" style="color:#f87171;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/>
+          </svg>
+          <span id="error-text" class="text-sm" style="color: #fca5a5; font-family: 'DM Sans', sans-serif;"></span>
+        </div>
+
+        <form id="login-form" novalidate class="space-y-4">
+
+          <!-- Username -->
+          <div>
+            <label for="username"
+                   class="block text-xs font-medium mb-2 tracking-wider uppercase"
+                   style="color: rgba(255,255,255,0.4); font-family: 'DM Mono', monospace;">
+              Usuario
+            </label>
+            <input id="username" name="username" type="text"
+                   autocomplete="username" required
+                   placeholder="Ej: admin"
+                   class="input-field" />
+          </div>
+
+          <!-- Password -->
+          <div>
+            <label for="password"
+                   class="block text-xs font-medium mb-2 tracking-wider uppercase"
+                   style="color: rgba(255,255,255,0.4); font-family: 'DM Mono', monospace;">
+              Contraseña
+            </label>
+            <div class="relative">
+              <input id="password" name="password" type="password"
+                     autocomplete="current-password" required
+                     placeholder="••••••••"
+                     class="input-field" style="padding-right: 44px;" />
+              <button type="button" id="toggle-pwd"
+                      class="absolute right-3 top-1/2 -translate-y-1/2 transition-colors"
+                      style="color: rgba(255,255,255,0.3);"
+                      aria-label="Ver contraseña">
+                <svg id="eye-open" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                <svg id="eye-closed" class="w-4 h-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Submit -->
+          <div class="pt-2">
+            <button type="submit" id="submit-btn" class="btn-primary">
+              <span id="btn-label">Iniciar sesión</span>
+              <svg id="btn-spinner" class="w-4 h-4 spin hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 12 0 12 4.418 4.418 0 004 12H4z"/>
+              </svg>
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- Footer técnico -->
+      <div class="card-enter-3 mt-6 text-center">
+        <p class="text-xs" style="color: rgba(255,255,255,0.2); font-family: 'DM Mono', monospace;">
+          auth:8004 · productos:8001 · pedidos:8002
+        </p>
+      </div>
+
+    </div>
+  </main>
+</BaseLayout>
+
+<script>
+  import { login, isLoggedIn } from '../lib/api.ts';
+
+  // Guard: si ya hay sesión válida, saltamos directo al dashboard
+  if (isLoggedIn()) {
+    window.location.replace('/dashboard');
+  }
+
+  const form        = document.getElementById('login-form')    as HTMLFormElement;
+  const userInput   = document.getElementById('username')      as HTMLInputElement;
+  const passInput   = document.getElementById('password')      as HTMLInputElement;
+  const submitBtn   = document.getElementById('submit-btn')    as HTMLButtonElement;
+  const btnLabel    = document.getElementById('btn-label')     as HTMLSpanElement;
+  const btnSpinner  = document.getElementById('btn-spinner')   as SVGElement;
+  const errorBanner = document.getElementById('error-banner')  as HTMLDivElement;
+  const errorText   = document.getElementById('error-text')    as HTMLSpanElement;
+  const togglePwd   = document.getElementById('toggle-pwd')    as HTMLButtonElement;
+  const eyeOpen     = document.getElementById('eye-open')      as SVGElement;
+  const eyeClosed   = document.getElementById('eye-closed')    as SVGElement;
+
+  // Toggle password visibility
+  togglePwd.addEventListener('click', () => {
+    const showing = passInput.type === 'text';
+    passInput.type = showing ? 'password' : 'text';
+    eyeOpen.classList.toggle('hidden', !showing);
+    eyeClosed.classList.toggle('hidden', showing);
+  });
+
+  function showError(msg: string): void {
+    errorText.textContent = msg;
+    errorBanner.classList.remove('hidden');
+    userInput.classList.add('error');
+    passInput.classList.add('error');
+  }
+
+  function hideError(): void {
+    errorBanner.classList.add('hidden');
+    userInput.classList.remove('error');
+    passInput.classList.remove('error');
+  }
+
+  function setLoading(loading: boolean): void {
+    submitBtn.disabled = loading;
+    btnLabel.textContent = loading ? 'Verificando...' : 'Iniciar sesión';
+    btnSpinner.classList.toggle('hidden', !loading);
+  }
+
+  // Limpiar error cuando el usuario empieza a escribir
+  [userInput, passInput].forEach(el =>
+    el.addEventListener('input', () => hideError())
+  );
+
+  form.addEventListener('submit', async (e: Event) => {
+    e.preventDefault();
+    hideError();
+
+    const username = userInput.value.trim();
+    const password = passInput.value;
+
+    if (!username || !password) {
+      showError('Por favor completa usuario y contraseña.');
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      await login(username, password);
+      // Redirigir al dashboard tras login exitoso
+      window.location.replace('/dashboard');
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Error al conectar con el servidor.';
+      showError(msg);
+    } finally {
+      setLoading(false);
+    }
+  });
+</script>
