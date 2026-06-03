@@ -38,7 +38,7 @@ def get_db_connection():
 
 # ¡Magia pura! Le decimos a Swagger que el botón verde "Authorize" 
 # debe pedirle el token al puerto 8004, no a este servidor.
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="http://localhost:8004/token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="https://shopnow-auth.onrender.com/token")
 
 def obtener_usuario_actual(token: str = Depends(oauth2_scheme)):
     """
@@ -48,7 +48,7 @@ def obtener_usuario_actual(token: str = Depends(oauth2_scheme)):
     try:
         headers = {"Authorization": f"Bearer {token}"}
         # Hacemos una petición rápida al puerto 8004 para validar
-        res = requests.get("http://auth:8004/verify", headers=headers)
+        res = requests.get("https://shopnow-auth.onrender.com/verify", headers=headers)
         res.raise_for_status()
         
         datos_auth = res.json()

@@ -1,10 +1,10 @@
 // src/lib/api.ts
 
-const AUTH_URL = 'http://127.0.0.1:8004';
-const CLIE_URL = 'http://127.0.0.1:8000';
-const PROD_URL = 'http://127.0.0.1:8001';
+const AUTH_URL = 'https://shopnow-auth.onrender.com';
+const CLIE_URL = 'https://shopnow-clientes-v714.onrender.com';
+const PROD_URL = 'https://shopnow-productos-e2tb.onrender.com';
 const PEDI_URL = 'http://127.0.0.1:8002';
-const INVE_URL = 'http://127.0.0.1:8003';
+const INVE_URL = 'https://shopnow-inventario-5x4i.onrender.com';
 
 // ── MANEJO DEL TOKEN Y SESIÓN ──────────────────────────────────────────
 export function setToken(token: string, username: string) {

@@ -34,13 +34,13 @@ def get_db_connection():
     return psycopg2.connect(DB_URL, cursor_factory=RealDictCursor)
 
 # --- SEGURIDAD: CONEXIÓN AL SERVICIO DE AUTH ---
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="http://localhost:8004/token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="https://shopnow-auth.onrender.com/token")
 
 def obtener_usuario_actual(token: str = Depends(oauth2_scheme)):
     """Valida el token comunicándose con el Microservicio de Auth (8004)."""
     try:
         headers = {"Authorization": f"Bearer {token}"}
-        res = requests.get("http://auth:8004/verify", headers=headers)
+        res = requests.get("https://shopnow-auth.onrender.com/verify", headers=headers)
         res.raise_for_status()
         return res.json()["usuario"]
     except requests.exceptions.RequestException:
@@ -112,7 +112,7 @@ def registrar_inventario(nuevo: Inventario):
     
     try:
         headers_seguros = {"Authorization": "Bearer token_seguro_said"}
-        res_productos = requests.get("http://productos:8001/v2/productos", headers=headers_seguros)
+        res_productos = requests.get("https://shopnow-productos-e2tb.onrender.com/v2/productos", headers=headers_seguros)
         if res_productos.status_code != 200:
             raise HTTPException(status_code=503, detail="El servicio de Productos no responde.")
             

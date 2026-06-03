@@ -44,13 +44,13 @@ def get_db_connection():
     return psycopg2.connect(DB_URL, cursor_factory=RealDictCursor)
 
 # --- SEGURIDAD: CONEXIÓN AL SERVICIO DE AUTH ---
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="http://localhost:8004/token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="https://shopnow-auth.onrender.com/token")
 
 def obtener_usuario_actual(token: str = Depends(oauth2_scheme)):
     """Valida el token comunicándose con el Microservicio de Auth (8004)."""
     try:
         headers = {"Authorization": f"Bearer {token}"}
-        res = requests.get("http://auth:8004/verify", headers=headers)
+        res = requests.get("https://shopnow-auth.onrender.com/verify", headers=headers)
         res.raise_for_status()
         return res.json()["usuario"]
     except requests.exceptions.RequestException:
@@ -97,7 +97,7 @@ def trabajador_asincrono():
             headers_seguros = {"Authorization": "Bearer token_seguro_said"}
             
             # 1. Validar Cliente (8000)
-            res_cliente = requests.get("http://clientes:8000/v2/clientes", headers=headers_seguros)
+            res_cliente = requests.get("https://shopnow-clientes-v714.onrender.com/v2/clientes", headers=headers_seguros)
             res_cliente.raise_for_status()
             if not any(int(c['id_cliente']) == pedido['id_cliente'] for c in res_cliente.json()):
                 print(f"[X] Cliente {pedido['id_cliente']} no existe. Descartando.")
@@ -105,7 +105,7 @@ def trabajador_asincrono():
                 return
 
             # 2. Validar Producto (8001)
-            res_producto = requests.get("http://productos:8001/v2/productos", headers=headers_seguros)
+            res_producto = requests.get("https://shopnow-productos-e2tb.onrender.com/v2/productos", headers=headers_seguros)
             res_producto.raise_for_status()
             producto = next((p for p in res_producto.json() if int(p['id_producto']) == pedido['id_producto']), None)
             if not producto:
@@ -118,7 +118,7 @@ def trabajador_asincrono():
 
             # 3. Descontar Inventario (8003)
             payload_inv = {"id_producto": pedido['id_producto'], "cantidad": pedido['cantidad']}
-            res_inventario = requests.post("http://inventario:8003/inventario/descontar", json=payload_inv)
+            res_inventario = requests.post("https://shopnow-inventario-5x4i.onrender.com/inventario/descontar", json=payload_inv)
             
             conn = get_db_connection()
             cur = conn.cursor()
