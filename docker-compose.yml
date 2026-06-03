@@ -1,0 +1,53 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: shopnow_rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: shopnow
+      RABBITMQ_DEFAULT_PASS: 5h0pn0w
+    restart: always
+
+  auth:
+    build: ./serv_auth
+    container_name: shopnow_auth
+    ports:
+      - "8004:8004"
+
+  clientes:
+    build: ./serv_clientes
+    container_name: shopnow_clientes
+    ports:
+      - "8000:8000"
+    depends_on:
+      - auth
+
+  productos:
+    build: ./serv_productos
+    container_name: shopnow_productos
+    ports:
+      - "8001:8001"
+    depends_on:
+      - auth
+
+  inventario:
+    build: ./serv_inventario
+    container_name: shopnow_inventario
+    ports:
+      - "8003:8003"
+    depends_on:
+      - productos
+
+  pedidos:
+    build: ./serv_pedidos
+    container_name: shopnow_pedidos
+    ports:
+      - "8002:8002"
+    depends_on:
+      - rabbitmq
+      - auth
+      - clientes
+      - productos
+      - inventario

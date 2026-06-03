@@ -1,0 +1,18 @@
+# Usamos una versión ligera de Python
+FROM python:3.10-slim
+
+# Directorio de trabajo dentro del contenedor
+WORKDIR /app
+
+# Copiamos e instalamos las dependencias
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copiamos todo el código fuente
+COPY . .
+
+# Exponemos el puerto de este servicio (CAMBIAR SEGÚN EL SERVICIO)
+EXPOSE 8004
+
+# Comando para ejecutar (CAMBIAR EL NOMBRE DEL ARCHIVO Y EL PUERTO)
+CMD ["uvicorn", "serv_auth:app", "--host", "0.0.0.0", "--port", "8004"]
